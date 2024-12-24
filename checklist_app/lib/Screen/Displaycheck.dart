@@ -10,6 +10,6 @@ class Displaycheck extends StatefulWidget {
 class _DisplaycheckState extends State<Displaycheck> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Text('By');
   }
 }
