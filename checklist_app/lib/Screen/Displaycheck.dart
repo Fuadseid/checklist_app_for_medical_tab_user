@@ -8,9 +8,13 @@ class Displaycheck extends StatefulWidget {
 }
 
 class _DisplaycheckState extends State<Displaycheck> {
-  final double itemExtent = 70.0; // Adjusted height for each item
-
   final List<Map<String, String>> timeLabels = [
+    {'Morning': 'Afternoon'},
+    {'Morning': 'Afternoon'},
+    {'Morning': 'Afternoon'},
+    {'Morning': 'Afternoon'},
+    {'Morning': 'Afternoon'},
+    {'Morning': 'Afternoon'},
     {'Morning': 'Afternoon'},
     {'Morning': 'Afternoon'},
     {'Morning': 'Afternoon'},
@@ -27,12 +31,11 @@ class _DisplaycheckState extends State<Displaycheck> {
       ),
       height: 350,
       width: 350,
-      child: ListWheelScrollView(
-        itemExtent: itemExtent,
-        physics: const FixedExtentScrollPhysics(),
-        children: timeLabels.map((entry) {
-          String label = entry.keys.first;
-          String timeRange = entry.values.first;
+      child: ListView.builder(
+        itemCount: timeLabels.length,
+        itemBuilder: (context, index) {
+          String label = timeLabels[index].keys.first;
+          String timeRange = timeLabels[index].values.first;
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -60,7 +63,7 @@ class _DisplaycheckState extends State<Displaycheck> {
               ),
             ),
           );
-        }).toList(),
+        },
       ),
     );
   }
