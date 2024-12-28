@@ -21,13 +21,13 @@ class Homepage extends StatelessWidget {
         backgroundColor: Theme.of(context).secondaryHeaderColor,
         child: const Column(children: []),
       ),
-      body: const Column(
+      body:const Column(
         children: [
           Expanded(
               child: Column(
             children: [
-              Calander(),
-              Displaycheck(),
+              Calendar(),
+               Displaycheck(),
             ],
           ))
         ],
