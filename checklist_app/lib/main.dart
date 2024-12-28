@@ -3,7 +3,7 @@ import 'package:checklist_app/widget/Homepage.dart';
 
 class AppTheme {
   static ThemeData darkTheme = ThemeData(
-      primaryColor: const Color(020202),
+      primaryColor: const Color(0x00004eea),
       secondaryHeaderColor:const Color.fromARGB(160, 3, 27, 30),
       textTheme:const TextTheme(
         bodyLarge: TextStyle(color: Colors.white,fontSize: 20, fontWeight: FontWeight.bold),

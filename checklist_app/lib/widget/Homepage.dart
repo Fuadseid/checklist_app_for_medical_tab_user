@@ -10,7 +10,7 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        backgroundColor:const Color.fromRGBO(22, 22, 27, 100),
+        backgroundColor: const Color.fromRGBO(22, 22, 27, 100),
         iconTheme: const IconThemeData(color: Colors.white, size: 35),
         title: Text(
           "Check list app for tablet",
@@ -21,13 +21,16 @@ class Homepage extends StatelessWidget {
         backgroundColor: Theme.of(context).secondaryHeaderColor,
         child: const Column(children: []),
       ),
-      body:const Column(
+      body: const Column(
         children: [
           Expanded(
               child: Column(
             children: [
               Calendar(),
-               Displaycheck(),
+               SizedBox(
+                height: 50,
+              ),
+              Displaycheck(),
             ],
           ))
         ],
