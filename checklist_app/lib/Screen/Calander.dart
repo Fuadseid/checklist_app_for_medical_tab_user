@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:checklist_app/provider/checkerprovider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:checklist_app/Screen/Checker.dart';
 
@@ -71,14 +73,42 @@ class _CalendarState extends State<Calendar> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Column(children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(children: [
-                        Checker(
-                          value: newvalue,
-                          onChanged: (bool? value) {
-                             if (isWithinTimeRange(morningStart, morningEnd)) {
+                  Consumer(
+                    builder: (context, value, child) => Column(
+                      children: [
+                        Text(
+                          'Medicine Intake for ${_selectedDay?.day.toString()}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          'Morning: ${morningStart.format(context)} - ${morningEnd.format(context)}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Evening: ${eveningStart.format(context)} - ${eveningEnd.format(context)}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    child: Column(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(children: [
+                          Checker(
+                            value: newvalue,
+                            onChanged: (bool? value) {
+                              if (isWithinTimeRange(morningStart, morningEnd)) {
                                 if (newvalue == false) {
                                   // Show the AlertDialog
                                   showDialog(
@@ -87,7 +117,7 @@ class _CalendarState extends State<Calendar> {
                                       return AlertDialog(
                                         title: const Text('Alert'),
                                         content: const Text(
-                                          'Are you taking the medicine in the Morning?',
+                                          'Are you taking the medicine in the morning?',
                                           style: TextStyle(color: Colors.black),
                                         ),
                                         actions: <Widget>[
@@ -97,6 +127,9 @@ class _CalendarState extends State<Calendar> {
                                               // Do not check the checkbox
                                               setModalState(() {
                                                 newvalue = false;
+                                                context
+                                                    .read<Checkerprovider>()
+                                                    .toggleBvalue = newvalue;
                                               });
                                               Navigator.of(context)
                                                   .pop(); // Close the dialog
@@ -113,6 +146,9 @@ class _CalendarState extends State<Calendar> {
                                               // Check the checkbox
                                               setModalState(() {
                                                 newvalue = true;
+                                                context
+                                                    .read<Checkerprovider>()
+                                                    .toggleBvalue = newvalue;
                                               });
                                               Navigator.of(context)
                                                   .pop(); // Close the dialog
@@ -131,95 +167,109 @@ class _CalendarState extends State<Calendar> {
                               } else {
                                 // If outside the time range, uncheck the checkbox
                                 setModalState(() {
-                                  newvalue1 = false;
-                                });
-                              }
-                          },
-                        ),
-                        const SizedBox(width: 20),
-                        const Text(
-                          "Morening ",
-                          style: TextStyle(fontSize: 30),
-                        ),
-                      ]),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Checker(
-                            value: newvalue1,
-                            onChanged: (bool? value) {
-                              if (isWithinTimeRange(eveningStart, eveningEnd)) {
-                                if (newvalue1 == false) {
-                                  // Show the AlertDialog
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text('Alert'),
-                                        content: const Text(
-                                          'Are you taking the medicine in the evening?',
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                        actions: <Widget>[
-                                          // "No" button
-                                          TextButton(
-                                            onPressed: () {
-                                              // Do not check the checkbox
-                                              setModalState(() {
-                                                newvalue1 = false;
-                                              });
-                                              Navigator.of(context)
-                                                  .pop(); // Close the dialog
-                                            },
-                                            child: const Text(
-                                              'No',
-                                              style: TextStyle(
-                                                  color: Colors.black),
-                                            ),
-                                          ),
-                                          // "Yes" button
-                                          TextButton(
-                                            onPressed: () {
-                                              // Check the checkbox
-                                              setModalState(() {
-                                                newvalue1 = true;
-                                              });
-                                              Navigator.of(context)
-                                                  .pop(); // Close the dialog
-                                            },
-                                            child: const Text(
-                                              'Yes',
-                                              style: TextStyle(
-                                                  color: Colors.black),
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                }
-                              } else {
-                                // If outside the time range, uncheck the checkbox
-                                setModalState(() {
-                                  newvalue1 = false;
+                                  newvalue = false;
+                                  context.read<Checkerprovider>().toggleBvalue =
+                                      newvalue;
                                 });
                               }
                             },
                           ),
                           const SizedBox(width: 20),
                           const Text(
-                            "Evening ",
+                            "Morening ",
                             style: TextStyle(fontSize: 30),
-                          )
-                        ],
+                          ),
+                        ]),
                       ),
-                    ),
-                  ])
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Checker(
+                              value: newvalue1,
+                              onChanged: (bool? value) {
+                                if (isWithinTimeRange(
+                                    eveningStart, eveningEnd)) {
+                                  if (newvalue1 == false) {
+                                    // Show the AlertDialog
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text('Alert'),
+                                          content: const Text(
+                                            'Are you taking the medicine in the evening?',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          actions: <Widget>[
+                                            // "No" button
+                                            TextButton(
+                                              onPressed: () {
+                                                // Do not check the checkbox
+                                                setModalState(() {
+                                                  newvalue1 = false;
+                                                  context
+                                                      .read<Checkerprovider>()
+                                                      .toggleBvalue1 = newvalue1;
+                                                });
+                                                Navigator.of(context)
+                                                    .pop(); // Close the dialog
+                                              },
+                                              child: const Text(
+                                                'No',
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                            // "Yes" button
+                                            TextButton(
+                                              onPressed: () {
+                                                // Check the checkbox
+                                                setModalState(() {
+                                                  newvalue1 = true;
+                                                  context
+                                                      .read<Checkerprovider>()
+                                                      .toggleBvalue1 = newvalue1;
+                                                });
+                                                Navigator.of(context)
+                                                    .pop(); // Close the dialog
+                                              },
+                                              child: const Text(
+                                                'Yes',
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }
+                                } else {
+                                  // If outside the time range, uncheck the checkbox
+                                  setModalState(() {
+                                    newvalue1 = false;
+                                    context
+                                        .read<Checkerprovider>()
+                                        .toggleBvalue1 = newvalue1;
+                                  });
+                                }
+                              },
+                            ),
+                            const SizedBox(width: 20),
+                            const Text(
+                              "Evening ",
+                              style: TextStyle(fontSize: 30),
+                            )
+                          ],
+                        ),
+                      ),
+                    ]),
+                  )
                 ],
               ),
             );

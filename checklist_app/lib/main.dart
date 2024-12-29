@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:checklist_app/widget/Homepage.dart';
+import 'package:provider/provider.dart';
+import 'package:checklist_app/provider/Checkerprovider.dart'; 
 
 class AppTheme {
   static ThemeData darkTheme = ThemeData(
@@ -22,12 +24,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
-      
-      themeMode: ThemeMode.system,
-      home: const Homepage(),
+    return MultiProvider(
+      providers:[
+        ChangeNotifierProvider(create: (context) => Checkerprovider()),
+      ],
+      child:  MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.darkTheme,
+        
+        themeMode: ThemeMode.system,
+        home: const Homepage(),
+      ),
     );
   }
 }
