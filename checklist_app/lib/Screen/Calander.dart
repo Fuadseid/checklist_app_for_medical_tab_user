@@ -17,7 +17,7 @@ class _CalendarState extends State<Calendar> {
   bool newvalue = false; // Persistent state for checkbox
   bool newvalue1 = false; // Persistent state for checkbox
   final morningStart = const TimeOfDay(hour: 6, minute: 0);
-  final morningEnd = const TimeOfDay(hour: 10, minute: 0);
+  final morningEnd = const TimeOfDay(hour: 20, minute: 0);
   final eveningStart = const TimeOfDay(hour: 20, minute: 0);
   final eveningEnd = const TimeOfDay(hour: 22, minute: 0);
 
@@ -76,32 +76,6 @@ class _CalendarState extends State<Calendar> {
                   Consumer(
                     builder: (context, value, child) => Column(
                       children: [
-                        Text(
-                          'Medicine Intake for ${_selectedDay?.day.toString()}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Morning: ${morningStart.format(context)} - ${morningEnd.format(context)}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Evening: ${eveningStart.format(context)} - ${eveningEnd.format(context)}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    child: Column(children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(children: [
@@ -127,9 +101,7 @@ class _CalendarState extends State<Calendar> {
                                               // Do not check the checkbox
                                               setModalState(() {
                                                 newvalue = false;
-                                                context
-                                                    .read<Checkerprovider>()
-                                                    .toggleBvalue = newvalue;
+                                               
                                               });
                                               Navigator.of(context)
                                                   .pop(); // Close the dialog
@@ -146,9 +118,7 @@ class _CalendarState extends State<Calendar> {
                                               // Check the checkbox
                                               setModalState(() {
                                                 newvalue = true;
-                                                context
-                                                    .read<Checkerprovider>()
-                                                    .toggleBvalue = newvalue;
+                                              
                                               });
                                               Navigator.of(context)
                                                   .pop(); // Close the dialog

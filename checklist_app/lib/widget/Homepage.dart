@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:checklist_app/Screen/Calander.dart';
-import 'package:checklist_app/Screen/Displaycheck.dart';
+import 'package:checklist_app/Screen/Calander.dart';  // Assuming you have Calendar imported
+import 'package:checklist_app/Screen/Displaycheck.dart';  // Correct import of Displaycheck
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -26,11 +26,11 @@ class Homepage extends StatelessWidget {
           Expanded(
               child: Column(
             children: [
-              Calendar(),
-               SizedBox(
+              Calendar(),  // Ensure Calendar is imported correctly
+              SizedBox(
                 height: 50,
               ),
-              Displaycheck(),
+              Displaycheck(),  // Displaycheck is used here
             ],
           ))
         ],

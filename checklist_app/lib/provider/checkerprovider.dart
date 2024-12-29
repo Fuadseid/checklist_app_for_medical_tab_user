@@ -1,18 +1,35 @@
+
 import 'package:flutter/material.dart';
 
-class Checkerprovider extends ChangeNotifier {
-  bool bvalue = false;
-  bool bvalue1 = false;
-Checkerprovider({this.bvalue = false, this.bvalue1 = false});
- 
+class Checkerprovider with ChangeNotifier {
 
-  set toggleBvalue(bool newvalue) {
-    bvalue = newvalue;
+  bool _toggleBvalue = false;
+
+  bool _toggleBvalue1 = false;
+
+
+
+  bool get bvalue => _toggleBvalue;
+
+  bool get bvalue1 => _toggleBvalue1;
+
+
+  set toggleBvalue(bool value) {
+
+    _toggleBvalue = value;
+
     notifyListeners();
+
   }
 
-  set toggleBvalue1(bool newvalue1) {
-    bvalue1 = newvalue1;
+
+
+  set toggleBvalue1(bool value) {
+
+    _toggleBvalue1 = value;
+
     notifyListeners();
+
   }
+
 }
