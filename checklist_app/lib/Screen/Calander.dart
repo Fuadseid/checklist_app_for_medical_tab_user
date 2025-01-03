@@ -19,7 +19,7 @@ class _CalendarState extends State<Calendar> {
   final morningStart = const TimeOfDay(hour: 6, minute: 0);
   final morningEnd = const TimeOfDay(hour: 20, minute: 0);
   final eveningStart = const TimeOfDay(hour: 20, minute: 0);
-  final eveningEnd = const TimeOfDay(hour: 6, minute: 0);
+  final eveningEnd = const TimeOfDay(hour: 24, minute: 0);
 
   bool isWithinTimeRange(TimeOfDay start, TimeOfDay end) {
     final nowMinutes = today.hour * 60 + today.minute;
@@ -40,7 +40,10 @@ class _CalendarState extends State<Calendar> {
     setState(() {
       _selectedDay = selectedDay;
     });
-    if (selectedDay == today) {
+
+    DateTime todaymidnight = DateTime(today.year, today.month, today.day);
+    DateTime selectedDaymidnight = DateTime(selectedDay.year, selectedDay.month, selectedDay.day);
+    if (todaymidnight==selectedDaymidnight) {
       showModalBottomSheet(
         backgroundColor: Colors.black,
         context: context,
@@ -235,7 +238,7 @@ class _CalendarState extends State<Calendar> {
         },
       );
     } else {
-      return null;
+      return ;
     }
   }
 
