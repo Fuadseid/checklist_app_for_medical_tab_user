@@ -19,7 +19,7 @@ class _CalendarState extends State<Calendar> {
   final morningStart = const TimeOfDay(hour: 6, minute: 0);
   final morningEnd = const TimeOfDay(hour: 20, minute: 0);
   final eveningStart = const TimeOfDay(hour: 20, minute: 0);
-  final eveningEnd = const TimeOfDay(hour: 24, minute: 0);
+  final eveningEnd = const TimeOfDay(hour: 6, minute: 0);
 
   bool isWithinTimeRange(TimeOfDay start, TimeOfDay end) {
     final nowMinutes = today.hour * 60 + today.minute;
@@ -42,8 +42,9 @@ class _CalendarState extends State<Calendar> {
     });
 
     DateTime todaymidnight = DateTime(today.year, today.month, today.day);
-    DateTime selectedDaymidnight = DateTime(selectedDay.year, selectedDay.month, selectedDay.day);
-    if (todaymidnight==selectedDaymidnight) {
+    DateTime selectedDaymidnight =
+        DateTime(selectedDay.year, selectedDay.month, selectedDay.day);
+    if (todaymidnight == selectedDaymidnight) {
       showModalBottomSheet(
         backgroundColor: Colors.black,
         context: context,
@@ -146,7 +147,7 @@ class _CalendarState extends State<Calendar> {
                             const SizedBox(width: 20),
                             const Text(
                               "Morening ",
-                              style: TextStyle(fontSize: 30),
+                              style: TextStyle(fontSize: 20),
                             ),
                           ]),
                         ),
@@ -223,11 +224,29 @@ class _CalendarState extends State<Calendar> {
                               const SizedBox(width: 20),
                               const Text(
                                 "Evening ",
-                                style: TextStyle(fontSize: 30),
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
                               )
                             ],
                           ),
                         ),
+                       const SizedBox(
+                          height: 30,
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child: ElevatedButton(
+                            
+                              style: ElevatedButton.styleFrom(
+                                 
+                                  backgroundColor: const Color.fromARGB(255, 23, 72, 82),
+                                  padding: const EdgeInsets.all(20)),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child:const Text("Close", style: TextStyle(fontSize: 20, color: Colors.white)),),
+                        )
                       ]),
                     )
                   ],
@@ -238,7 +257,7 @@ class _CalendarState extends State<Calendar> {
         },
       );
     } else {
-      return ;
+      return;
     }
   }
 

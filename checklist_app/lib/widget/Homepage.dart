@@ -21,12 +21,12 @@ class Homepage extends StatelessWidget {
       drawer: Drawer(
         backgroundColor: Theme.of(context).secondaryHeaderColor,
         child: Consumer(
-          builder:(context, value, child)=> Column(children: [
+          builder: (context, value, child) => Column(children: [
             Container(
                 height: 350,
                 width: double.infinity,
                 child: Image.asset(
-                    "lib/assets/many_tablets.jpg", 
+                  'assets/many_tablets.jpg',
                   fit: BoxFit.cover,
                 )),
           ]),
