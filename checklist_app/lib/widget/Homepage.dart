@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:checklist_app/Screen/Calander.dart';  // Assuming you have Calendar imported
-import 'package:checklist_app/Screen/Displaycheck.dart';  // Correct import of Displaycheck
+import 'package:checklist_app/Screen/Calander.dart'; // Assuming you have Calendar imported
+import 'package:checklist_app/Screen/Displaycheck.dart';
+import 'package:provider/provider.dart'; // Correct import of Displaycheck
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -19,18 +20,28 @@ class Homepage extends StatelessWidget {
       ),
       drawer: Drawer(
         backgroundColor: Theme.of(context).secondaryHeaderColor,
-        child: const Column(children: []),
+        child: Consumer(
+          builder:(context, value, child)=> Column(children: [
+            Container(
+                height: 350,
+                width: double.infinity,
+                child: Image.asset(
+                    "lib/assets/many_tablets.jpg", 
+                  fit: BoxFit.cover,
+                )),
+          ]),
+        ),
       ),
       body: const Column(
         children: [
           Expanded(
               child: Column(
             children: [
-              Calendar(),  // Ensure Calendar is imported correctly
+              Calendar(), // Ensure Calendar is imported correctly
               SizedBox(
                 height: 50,
               ),
-              Displaycheck(),  // Displaycheck is used here
+              Displaycheck(), // Displaycheck is used here
             ],
           ))
         ],

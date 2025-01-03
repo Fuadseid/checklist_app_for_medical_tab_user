@@ -19,7 +19,7 @@ class _CalendarState extends State<Calendar> {
   final morningStart = const TimeOfDay(hour: 6, minute: 0);
   final morningEnd = const TimeOfDay(hour: 20, minute: 0);
   final eveningStart = const TimeOfDay(hour: 20, minute: 0);
-  final eveningEnd = const TimeOfDay(hour: 22, minute: 0);
+  final eveningEnd = const TimeOfDay(hour: 6, minute: 0);
 
   bool isWithinTimeRange(TimeOfDay start, TimeOfDay end) {
     final nowMinutes = today.hour * 60 + today.minute;
@@ -47,7 +47,6 @@ class _CalendarState extends State<Calendar> {
       isScrollControlled: true,
       builder: (context) {
         return StatefulBuilder(
-          // Use StatefulBuilder to manage state within the modal
           builder: (context, setModalState) {
             return FractionallySizedBox(
               heightFactor: 0.7,
@@ -80,10 +79,10 @@ class _CalendarState extends State<Calendar> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(children: [
                           Checker(
-                            value: newvalue,
+                            value: context.read<Checkerprovider>().bvalue,
                             onChanged: (bool? value) {
                               if (isWithinTimeRange(morningStart, morningEnd)) {
-                                if (newvalue == false) {
+                                if (context.read<Checkerprovider>().bvalue == false) {
                                   // Show the AlertDialog
                                   showDialog(
                                     context: context,
@@ -100,7 +99,7 @@ class _CalendarState extends State<Calendar> {
                                             onPressed: () {
                                               // Do not check the checkbox
                                               setModalState(() {
-                                                newvalue = false;
+                                                context.read<Checkerprovider>().toggleBvalue = false;
                                                
                                               });
                                               Navigator.of(context)
@@ -117,7 +116,7 @@ class _CalendarState extends State<Calendar> {
                                             onPressed: () {
                                               // Check the checkbox
                                               setModalState(() {
-                                                newvalue = true;
+                                                context.read<Checkerprovider>().toggleBvalue = true;
                                               
                                               });
                                               Navigator.of(context)
@@ -137,9 +136,8 @@ class _CalendarState extends State<Calendar> {
                               } else {
                                 // If outside the time range, uncheck the checkbox
                                 setModalState(() {
-                                  newvalue = false;
-                                  context.read<Checkerprovider>().toggleBvalue =
-                                      newvalue;
+                                  context.read<Checkerprovider>().toggleBvalue = false;
+                                 
                                 });
                               }
                             },
@@ -159,11 +157,11 @@ class _CalendarState extends State<Calendar> {
                         child: Row(
                           children: [
                             Checker(
-                              value: newvalue1,
+                              value: context.read<Checkerprovider>().bvalue1,
                               onChanged: (bool? value) {
                                 if (isWithinTimeRange(
                                     eveningStart, eveningEnd)) {
-                                  if (newvalue1 == false) {
+                                  if (context.read<Checkerprovider>().bvalue1 == false) {
                                     // Show the AlertDialog
                                     showDialog(
                                       context: context,
@@ -181,10 +179,8 @@ class _CalendarState extends State<Calendar> {
                                               onPressed: () {
                                                 // Do not check the checkbox
                                                 setModalState(() {
-                                                  newvalue1 = false;
-                                                  context
-                                                      .read<Checkerprovider>()
-                                                      .toggleBvalue1 = newvalue1;
+                                                  context.read<Checkerprovider>().toggleBvalue1 = false;
+                                                  
                                                 });
                                                 Navigator.of(context)
                                                     .pop(); // Close the dialog
@@ -200,10 +196,8 @@ class _CalendarState extends State<Calendar> {
                                               onPressed: () {
                                                 // Check the checkbox
                                                 setModalState(() {
-                                                  newvalue1 = true;
-                                                  context
-                                                      .read<Checkerprovider>()
-                                                      .toggleBvalue1 = newvalue1;
+                                                  context.read<Checkerprovider>().toggleBvalue1 = true;
+                                                  
                                                 });
                                                 Navigator.of(context)
                                                     .pop(); // Close the dialog
@@ -222,10 +216,8 @@ class _CalendarState extends State<Calendar> {
                                 } else {
                                   // If outside the time range, uncheck the checkbox
                                   setModalState(() {
-                                    newvalue1 = false;
-                                    context
-                                        .read<Checkerprovider>()
-                                        .toggleBvalue1 = newvalue1;
+                                    context.read<Checkerprovider>().toggleBvalue1 = false;
+                                    
                                   });
                                 }
                               },

@@ -70,12 +70,12 @@ class Displaycheck extends StatelessWidget {
                             height: 20,
                             width: 20,
                             decoration: BoxDecoration(
-                              color: bvalue == true
+                              color: bvalue1 == true
                                   ? const Color.fromARGB(255, 12, 75, 47)
                                   : const Color.fromARGB(225, 225, 0, 0),
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(
-                                  color: bvalue == true
+                                  color: bvalue1 == true
                                       ? const Color.fromARGB(255, 12, 75, 47)
                                       : const Color.fromARGB(255, 255, 0, 0)),
                             ),
@@ -86,7 +86,7 @@ class Displaycheck extends StatelessWidget {
                           Text(
                             context
                                 .read<Checkerprovider>()
-                                .bvalue
+                                .bvalue1
                                 .toString(), // Display bvalue1 from Checkerprovider
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 14),
