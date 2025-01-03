@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:checklist_app/provider/checkerprovider.dart';
+import 'package:checklist_app/provider/Checkerprovider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:checklist_app/Screen/Checker.dart';
 
@@ -40,128 +40,49 @@ class _CalendarState extends State<Calendar> {
     setState(() {
       _selectedDay = selectedDay;
     });
-
-    showModalBottomSheet(
-      backgroundColor: Colors.black,
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setModalState) {
-            return FractionallySizedBox(
-              heightFactor: 0.7,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Container(
-                      height: 150,
-                      width: 150,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(100, 43, 43, 43),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        (_selectedDay?.day.toString()) ?? '',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 40,
+    if (selectedDay == today) {
+      showModalBottomSheet(
+        backgroundColor: Colors.black,
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return StatefulBuilder(
+            builder: (context, setModalState) {
+              return FractionallySizedBox(
+                heightFactor: 0.7,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Container(
+                        height: 150,
+                        width: 150,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(100, 43, 43, 43),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          (_selectedDay?.day.toString()) ?? '',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 40,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  Consumer(
-                    builder: (context, value, child) => Column(
-                      children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(children: [
-                          Checker(
-                            value: context.read<Checkerprovider>().bvalue,
-                            onChanged: (bool? value) {
-                              if (isWithinTimeRange(morningStart, morningEnd)) {
-                                if (context.read<Checkerprovider>().bvalue == false) {
-                                  // Show the AlertDialog
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text('Alert'),
-                                        content: const Text(
-                                          'Are you taking the medicine in the morning?',
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                        actions: <Widget>[
-                                          // "No" button
-                                          TextButton(
-                                            onPressed: () {
-                                              // Do not check the checkbox
-                                              setModalState(() {
-                                                context.read<Checkerprovider>().toggleBvalue = false;
-                                               
-                                              });
-                                              Navigator.of(context)
-                                                  .pop(); // Close the dialog
-                                            },
-                                            child: const Text(
-                                              'No',
-                                              style: TextStyle(
-                                                  color: Colors.black),
-                                            ),
-                                          ),
-                                          // "Yes" button
-                                          TextButton(
-                                            onPressed: () {
-                                              // Check the checkbox
-                                              setModalState(() {
-                                                context.read<Checkerprovider>().toggleBvalue = true;
-                                              
-                                              });
-                                              Navigator.of(context)
-                                                  .pop(); // Close the dialog
-                                            },
-                                            child: const Text(
-                                              'Yes',
-                                              style: TextStyle(
-                                                  color: Colors.black),
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                }
-                              } else {
-                                // If outside the time range, uncheck the checkbox
-                                setModalState(() {
-                                  context.read<Checkerprovider>().toggleBvalue = false;
-                                 
-                                });
-                              }
-                            },
-                          ),
-                          const SizedBox(width: 20),
-                          const Text(
-                            "Morening ",
-                            style: TextStyle(fontSize: 30),
-                          ),
-                        ]),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
+                    const SizedBox(height: 20),
+                    Consumer<Checkerprovider>(
+                      builder: (_, model, child) => Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(children: [
                             Checker(
-                              value: context.read<Checkerprovider>().bvalue1,
+                              value: model.bvalue,
                               onChanged: (bool? value) {
                                 if (isWithinTimeRange(
-                                    eveningStart, eveningEnd)) {
-                                  if (context.read<Checkerprovider>().bvalue1 == false) {
+                                    morningStart, morningEnd)) {
+                                  if (model.bvalue == false) {
                                     // Show the AlertDialog
                                     showDialog(
                                       context: context,
@@ -169,7 +90,7 @@ class _CalendarState extends State<Calendar> {
                                         return AlertDialog(
                                           title: const Text('Alert'),
                                           content: const Text(
-                                            'Are you taking the medicine in the evening?',
+                                            'Are you taking the medicine in the morning?',
                                             style:
                                                 TextStyle(color: Colors.black),
                                           ),
@@ -179,8 +100,7 @@ class _CalendarState extends State<Calendar> {
                                               onPressed: () {
                                                 // Do not check the checkbox
                                                 setModalState(() {
-                                                  context.read<Checkerprovider>().toggleBvalue1 = false;
-                                                  
+                                                  model.toggleBvalue = false;
                                                 });
                                                 Navigator.of(context)
                                                     .pop(); // Close the dialog
@@ -196,8 +116,7 @@ class _CalendarState extends State<Calendar> {
                                               onPressed: () {
                                                 // Check the checkbox
                                                 setModalState(() {
-                                                  context.read<Checkerprovider>().toggleBvalue1 = true;
-                                                  
+                                                  model.toggleBvalue = true;
                                                 });
                                                 Navigator.of(context)
                                                     .pop(); // Close the dialog
@@ -216,29 +135,108 @@ class _CalendarState extends State<Calendar> {
                                 } else {
                                   // If outside the time range, uncheck the checkbox
                                   setModalState(() {
-                                    context.read<Checkerprovider>().toggleBvalue1 = false;
-                                    
+                                    model.toggleBvalue = false;
                                   });
                                 }
                               },
                             ),
                             const SizedBox(width: 20),
                             const Text(
-                              "Evening ",
+                              "Morening ",
                               style: TextStyle(fontSize: 30),
-                            )
-                          ],
+                            ),
+                          ]),
                         ),
-                      ),
-                    ]),
-                  )
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Checker(
+                                value: model.bvalue1,
+                                onChanged: (bool? value) {
+                                  if (isWithinTimeRange(
+                                      eveningStart, eveningEnd)) {
+                                    if (model.bvalue1 == false) {
+                                      // Show the AlertDialog
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('Alert'),
+                                            content: const Text(
+                                              'Are you taking the medicine in the evening?',
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ),
+                                            actions: <Widget>[
+                                              // "No" button
+                                              TextButton(
+                                                onPressed: () {
+                                                  // Do not check the checkbox
+                                                  setModalState(() {
+                                                    model.toggleBvalue1 = false;
+                                                  });
+                                                  Navigator.of(context)
+                                                      .pop(); // Close the dialog
+                                                },
+                                                child: const Text(
+                                                  'No',
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                              // "Yes" button
+                                              TextButton(
+                                                onPressed: () {
+                                                  // Check the checkbox
+                                                  setModalState(() {
+                                                    model.toggleBvalue1 = true;
+                                                  });
+                                                  Navigator.of(context)
+                                                      .pop(); // Close the dialog
+                                                },
+                                                child: const Text(
+                                                  'Yes',
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
+                                  } else {
+                                    // If outside the time range, uncheck the checkbox
+                                    setModalState(() {
+                                      model.toggleBvalue1 = false;
+                                    });
+                                  }
+                                },
+                              ),
+                              const SizedBox(width: 20),
+                              const Text(
+                                "Evening ",
+                                style: TextStyle(fontSize: 30),
+                              )
+                            ],
+                          ),
+                        ),
+                      ]),
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      );
+    } else {
+      return null;
+    }
   }
 
   @override

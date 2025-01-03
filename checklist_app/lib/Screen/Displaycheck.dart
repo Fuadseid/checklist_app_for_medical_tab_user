@@ -11,7 +11,7 @@ class Displaycheck extends StatelessWidget {
     final bvalue = context.watch<Checkerprovider>().bvalue;
     final bvalue1 = context.watch<Checkerprovider>().bvalue1;
 
-    return Consumer(
+    return Consumer<Checkerprovider>(
       builder: (context, value, child) => Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
