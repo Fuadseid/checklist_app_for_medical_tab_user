@@ -7,10 +7,10 @@ class Displaycheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Access Checkerprovider values
-    final bvalue = context.watch<Checkerprovider>().bvalue;
-    final bvalue1 = context.watch<Checkerprovider>().bvalue1;
-    final now = [DateTime.now().day, DateTime.now().month, DateTime.now().year];
+    // Watch the `Checkerprovider` for changes
+    final checkerProvider = context.watch<Checkerprovider>();
+    final model = checkerProvider.model; // Access model from the provider
+
     return Consumer<Checkerprovider>(
       builder: (context, value, child) => Container(
         decoration: BoxDecoration(
@@ -21,83 +21,39 @@ class Displaycheck extends StatelessWidget {
         height: 350,
         width: 350,
         child: ListView.builder(
-          itemCount: 2, // Example item count
+          itemCount: model.dates.length, // Use the length of `dates`
           itemBuilder: (context, index) {
+            final date = model.dates[index];
+            final mornchecked = date[3] as bool;  // Today's morning checkbox
+            final evechecked = date[4] as bool;   // Today's evening checkbox
+            int day = date[0];
+            int month = date[1];
+            int year = date[2];
+
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 decoration: BoxDecoration(
-                  border:
-                      Border.all(color: const Color.fromARGB(255, 2, 20, 12)),
+                  border: Border.all(color: const Color.fromARGB(255, 2, 20, 12)),
                   borderRadius: BorderRadius.circular(10),
                   color: const Color.fromARGB(255, 23, 33, 35),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${now[0].toString()}/${now[1].toString()}/${now[2].toString()}', // Display bvalue from Checkerprovider
+                      ListTile(
+                        title: Text(
+                          '$day/$month/$year',
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Container(
-                                height: 20,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                  color: bvalue == true
-                                      ? const Color.fromARGB(255, 12, 75, 47)
-                                      : const Color.fromARGB(225, 225, 0, 0),
-                                  borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(
-                                      color: bvalue == true
-                                          ? const Color.fromARGB(
-                                              255, 12, 75, 47)
-                                          : const Color.fromARGB(
-                                              255, 255, 0, 0)),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              const Text(
-                                "Morning",
-                                style:  TextStyle(
-                                    color: Colors.white, fontSize: 16),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                height: 20,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                  color: bvalue1 == true
-                                      ? const Color.fromARGB(255, 12, 75, 47)
-                                      : const Color.fromARGB(225, 225, 0, 0),
-                                  borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(
-                                      color: bvalue1 == true
-                                          ? const Color.fromARGB(
-                                              255, 12, 75, 47)
-                                          : const Color.fromARGB(
-                                              255, 255, 0, 0)),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              const Text(
-                                "Evening", // Display bvalue1 from Checkerprovider
-                                style:  TextStyle(
-                                    color: Colors.white, fontSize: 16),
-                              ),
-                            ],
-                          ),
+                          _buildStatusIndicator("Morning", mornchecked),
+                          _buildStatusIndicator("Evening", evechecked),
                         ],
                       ),
                     ],
@@ -108,6 +64,34 @@ class Displaycheck extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  // Helper widget for status indicators
+  Widget _buildStatusIndicator(String label, bool status) {
+    return Row(
+      children: [
+        Container(
+          height: 20,
+          width: 20,
+          decoration: BoxDecoration(
+            color: status
+                ? const Color.fromARGB(255, 12, 75, 47) // Green if true
+                : const Color.fromARGB(225, 225, 0, 0), // Red if false
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(
+              color: status
+                  ? const Color.fromARGB(255, 12, 75, 47) // Green border if true
+                  : const Color.fromARGB(255, 255, 0, 0), // Red border if false
+            ),
+          ),
+        ),
+        const SizedBox(width: 5),
+        Text(
+          label,
+          style: const TextStyle(color: Colors.white, fontSize: 16),
+        ),
+      ],
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:checklist_app/provider/Checkerprovider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:checklist_app/Screen/Checker.dart';
+import 'package:checklist_app/model/Model.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({super.key});
@@ -12,12 +13,23 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
+  final checkedmodel = Model();
+  late final mornchecked;
+  late final evechecked;
+
+  @override
+  void initState() {
+    super.initState();
+    mornchecked = checkedmodel.dates[4];
+    evechecked = checkedmodel.dates[5];
+  }
+
   DateTime? _selectedDay;
   DateTime today = DateTime.now();
   bool newvalue = false; // Persistent state for checkbox
   bool newvalue1 = false; // Persistent state for checkbox
   final morningStart = const TimeOfDay(hour: 6, minute: 0);
-  final morningEnd = const TimeOfDay(hour: 20, minute: 0);
+  final morningEnd = const TimeOfDay(hour: 10, minute: 0);
   final eveningStart = const TimeOfDay(hour: 20, minute: 0);
   final eveningEnd = const TimeOfDay(hour: 6, minute: 0);
 
@@ -103,9 +115,7 @@ class _CalendarState extends State<Calendar> {
                                             TextButton(
                                               onPressed: () {
                                                 // Do not check the checkbox
-                                                setModalState(() {
-                                                  model.toggleBvalue = false;
-                                                });
+                                                model.toggleBvalue = false;
                                                 Navigator.of(context)
                                                     .pop(); // Close the dialog
                                               },
@@ -119,9 +129,7 @@ class _CalendarState extends State<Calendar> {
                                             TextButton(
                                               onPressed: () {
                                                 // Check the checkbox
-                                                setModalState(() {
-                                                  model.toggleBvalue = true;
-                                                });
+                                                model.toggleBvalue = true;
                                                 Navigator.of(context)
                                                     .pop(); // Close the dialog
                                               },
@@ -138,9 +146,7 @@ class _CalendarState extends State<Calendar> {
                                   }
                                 } else {
                                   // If outside the time range, uncheck the checkbox
-                                  setModalState(() {
-                                    model.toggleBvalue = false;
-                                  });
+                                  model.toggleBvalue = false;
                                 }
                               },
                             ),
@@ -149,7 +155,7 @@ class _CalendarState extends State<Calendar> {
                               "Morening ",
                               style: TextStyle(fontSize: 20),
                             ),
-                          ]),
+                          ]), 
                         ),
                         const SizedBox(
                           height: 20,
@@ -180,9 +186,7 @@ class _CalendarState extends State<Calendar> {
                                               TextButton(
                                                 onPressed: () {
                                                   // Do not check the checkbox
-                                                  setModalState(() {
-                                                    model.toggleBvalue1 = false;
-                                                  });
+                                                  model.toggleBvalue1 = false;
                                                   Navigator.of(context)
                                                       .pop(); // Close the dialog
                                                 },
@@ -196,9 +200,7 @@ class _CalendarState extends State<Calendar> {
                                               TextButton(
                                                 onPressed: () {
                                                   // Check the checkbox
-                                                  setModalState(() {
-                                                    model.toggleBvalue1 = true;
-                                                  });
+                                                  model.toggleBvalue1 = true;
                                                   Navigator.of(context)
                                                       .pop(); // Close the dialog
                                                 },
@@ -215,9 +217,7 @@ class _CalendarState extends State<Calendar> {
                                     }
                                   } else {
                                     // If outside the time range, uncheck the checkbox
-                                    setModalState(() {
-                                      model.toggleBvalue1 = false;
-                                    });
+                                    model.toggleBvalue1 = false;
                                   }
                                 },
                               ),
@@ -231,23 +231,25 @@ class _CalendarState extends State<Calendar> {
                             ],
                           ),
                         ),
-                       const SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         SizedBox(
                           width: 200,
                           child: ElevatedButton(
-                            
-                              style: ElevatedButton.styleFrom(
-                                 
-                                  backgroundColor: const Color.fromARGB(255, 23, 72, 82),
-                                  padding: const EdgeInsets.all(20)),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child:const Text("Close", style: TextStyle(fontSize: 20, color: Colors.white)),),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 23, 72, 82),
+                                padding: const EdgeInsets.all(20)),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Close",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white)),
+                          ),
                         )
-                      ]),
+                      ]), 
                     )
                   ],
                 ),
