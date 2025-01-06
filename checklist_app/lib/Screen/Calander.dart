@@ -31,7 +31,7 @@ class _CalendarState extends State<Calendar> {
   final morningStart = const TimeOfDay(hour: 6, minute: 0);
   final morningEnd = const TimeOfDay(hour: 10, minute: 0);
   final eveningStart = const TimeOfDay(hour: 20, minute: 0);
-  final eveningEnd = const TimeOfDay(hour: 6, minute: 0);
+  final eveningEnd = const TimeOfDay(hour: 24, minute: 0);
 
   bool isWithinTimeRange(TimeOfDay start, TimeOfDay end) {
     final nowMinutes = today.hour * 60 + today.minute;
