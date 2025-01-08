@@ -17,7 +17,6 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(22, 22, 27, 100),
@@ -43,7 +42,7 @@ class _HomepageState extends State<Homepage> {
             GestureDetector(
               child: Text(
                 "Home page",
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               onTap: () {
                 setState(() {
@@ -56,7 +55,7 @@ class _HomepageState extends State<Homepage> {
             GestureDetector(
               child: Text(
                 "Search Medicine",
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               onTap: () {
                 setState(() {
@@ -69,7 +68,7 @@ class _HomepageState extends State<Homepage> {
             GestureDetector(
               child: Text(
                 "About page",
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               onTap: () {
                 setState(() {
