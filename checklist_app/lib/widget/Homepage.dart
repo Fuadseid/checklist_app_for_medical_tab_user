@@ -87,7 +87,6 @@ class _HomepageState extends State<Homepage> {
                   child: Column(
                     children: [
                       Calendar(),
-                      SizedBox(height: 50),
                       Displaycheck(),
                     ],
                   ),

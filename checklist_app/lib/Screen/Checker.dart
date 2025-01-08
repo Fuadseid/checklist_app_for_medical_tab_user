@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class Checker extends StatelessWidget {
   const Checker({
     super.key,
@@ -9,7 +8,7 @@ class Checker extends StatelessWidget {
 
   final bool value;
   final ValueChanged<bool?> onChanged;
-
+   
   @override
   Widget build(BuildContext context) {
     return Container(
