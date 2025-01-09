@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
-        home: const Homepage(),  // Home page starts here
+        home:const Expanded(child:  Homepage()),  // Home page starts here
       ),
     );
   }

@@ -29,7 +29,7 @@ class _CalendarState extends State<Calendar> {
   bool newvalue = false; // Persistent state for checkbox
   bool newvalue1 = false; // Persistent state for checkbox
   final morningStart = const TimeOfDay(hour: 6, minute: 0);
-  final morningEnd = const TimeOfDay(hour: 10, minute: 0);
+  final morningEnd = const TimeOfDay(hour: 24, minute: 0);
   final eveningStart = const TimeOfDay(hour: 20, minute: 0);
   final eveningEnd = const TimeOfDay(hour: 24, minute: 0);
 
