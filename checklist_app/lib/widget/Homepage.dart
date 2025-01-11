@@ -86,7 +86,7 @@ class _HomepageState extends State<Homepage> {
                 Expanded(
                   child: Column(
                     children: [
-                      Calendar(),
+                      Calendar( ),
                       Displaycheck(),
                     ],
                   ),
